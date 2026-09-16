@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>签署完成 - PC 端</title>
+<style>
+/* 按截图 2210×1276(@2x) 1:1 还原，此处尺寸取截图 1/2 → 1105×638 */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
+body{background:#dfe3e8;display:flex;justify-content:center;padding:24px 0;min-height:100vh;
+     font-family:-apple-system,"PingFang SC","Helvetica Neue","Microsoft YaHei",sans-serif}
+.page{width:1105px;height:638px;background:#f5f7fa;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.18)}
+
+/* 顶部栏 截图 y0-78，白底，底边 #e5e7eb */
+.topbar{height:39px;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;padding-left:21px}
+.mark{width:22px;height:22px;border-radius:5px;background:#1777ff;color:#fff;font-size:13px;font-weight:600;
+      display:flex;align-items:center;justify-content:center;margin-right:9px}
+.brand{font-size:15px;font-weight:600;color:#1f2937;letter-spacing:.3px}
+
+/* 页面标题 截图 y142-174，蓝点 #1777ff + 文字 #1f2937 */
+.crumb{margin:32px 0 0 194px;font-size:15px;color:#1f2937;display:flex;align-items:center;gap:7px}
+.crumb i{width:6px;height:6px;border-radius:50%;background:#1777ff;display:block}
+
+/* 内容卡片 截图 x357-1867 / y199-1258 → 178.5 起，宽 755，高 529.5 */
+.card{margin:12px 0 0 178px;width:755px;height:530px;background:#fff;border-radius:2px;
+      display:flex;flex-direction:column;align-items:center;text-align:center}
+
+/* 成功图标 直径 108→54，绿 #53c31b */
+.icon{width:54px;height:54px;border-radius:50%;background:#53c31b;display:flex;align-items:center;
+      justify-content:center;margin-top:87px}
+.icon svg{width:29px;height:29px}
+
+/* 主标题 截图 y533-574，20px #262626 */
+.title{margin-top:25px;font-size:20px;font-weight:500;color:#262626;line-height:1.1}
+
+/* 说明 截图 y607-636，14px #a3a3a3 */
+.desc{margin-top:16px;font-size:14px;color:#a3a3a3;line-height:1.25}
+
+/* 按钮组 截图 y675-721，高 47→23.5 */
+.btns{margin-top:20px;display:flex;gap:12px;align-items:center}
+
+/* 原有按钮「知道了」 白底 + 蓝边 + 蓝字 */
+.know{height:24px;padding:0 12px;border:1px solid #1990ff;border-radius:2px;background:#fff;
+      color:#1990ff;font-size:12px;font-family:inherit;cursor:pointer;transition:background .15s}
+.know:hover{background:#f0f7ff}
+
+/* ===== 新增元素：下载合同按钮（原图无） ===== */
+.dl{height:24px;padding:0 14px;border:1px solid #1990ff;border-radius:2px;background:#1990ff;
+    color:#fff;font-size:12px;font-family:inherit;cursor:pointer;transition:background .15s}
+.dl:hover{background:#0d7ae0;border-color:#0d7ae0}
+
+/* 轻提示 */
+.toast{position:fixed;left:50%;bottom:56px;transform:translate(-50%,12px);background:rgba(0,0,0,.78);
+       color:#fff;font-size:13px;padding:9px 18px;border-radius:4px;opacity:0;pointer-events:none;
+       transition:opacity .2s,transform .2s}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <span class="mark">签</span>
+    <span class="brand">电子签约平台</span>
+  </div>
+
+  <div class="crumb"><i></i>签署完成</div>
+
+  <div class="card">
+    <div class="icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 12.5 L9.5 18 L20 6.5" />
+      </svg>
+    </div>
+    <div class="title">签署成功</div>
+    <div class="desc">恭喜您，签约已完成</div>
+    <div class="btns">
+      <button class="dl" type="button" id="dl">下载合同</button>
+      <button class="know" type="button">知道了</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+<script>
+  var t = document.getElementById('toast');
+  function toast(msg) {
+    t.textContent = msg;
+    t.classList.add('on');
+    clearTimeout(t._h);
+    t._h = setTimeout(function () { t.classList.remove('on'); }, 1800);
+  }
+  document.getElementById('dl').addEventListener('click', function () {
+    toast('开始下载合同');
+  });
+  document.querySelector('.know').addEventListener('click', function () {
+    toast('已关闭');
+  });
+</script>
+</body>
+</html>

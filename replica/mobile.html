@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>签署完成 - 移动端</title>
+<style>
+/* 按截图 806×1416(@2x) 1:1 还原，此处尺寸取截图 1/2 → 403×708 */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
+body{background:#e9eaec;display:flex;justify-content:center;padding:24px 0;min-height:100vh;
+     font-family:-apple-system,"PingFang SC","Helvetica Neue","Microsoft YaHei",sans-serif}
+.phone{width:403px;height:708px;background:#f5f5f5;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.18)}
+
+/* 状态栏 截图 y0-43 */
+.sb{height:22px;display:flex;align-items:center;justify-content:space-between;padding:0 14px 0 18px;
+    font-size:11px;font-weight:600;color:#1a1a1a}
+.sb .r{display:flex;align-items:center;gap:4px}
+.sig{display:flex;align-items:flex-end;gap:1.5px}
+.sig i{display:block;width:2.5px;background:#1a1a1a;border-radius:.5px}
+.sig i:nth-child(1){height:4px}.sig i:nth-child(2){height:6px}
+.sig i:nth-child(3){height:8px}.sig i:nth-child(4){height:10px}
+.wifi{width:13px;height:10px;background:#1a1a1a;
+      clip-path:polygon(50% 100%,0 38%,12% 26%,50% 62%,88% 26%,100% 38%)}
+.bat{width:22px;height:11px;border:1px solid rgba(26,26,26,.4);border-radius:3px;padding:1.5px;position:relative}
+.bat::after{content:"";position:absolute;right:-3px;top:3px;width:1.5px;height:4px;background:rgba(26,26,26,.4);border-radius:0 1px 1px 0}
+.bat i{display:block;width:100%;height:100%;background:#1a1a1a;border-radius:1px}
+
+/* 导航栏 截图 y43-173，标题 #333 */
+.nav{height:65px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:500;color:#333}
+
+/* 间隙 截图 y173-204 */
+.gap{height:15px;background:#f6f8fb}
+
+/* 内容卡片 截图 y204-1400 */
+.card{background:#fff;height:598px;display:flex;flex-direction:column;align-items:center;text-align:center}
+
+/* 成功图标 截图 y349-537，直径 189→94.5，绿色 #0bbb08 */
+.icon{width:94px;height:94px;border-radius:50%;background:#0bbb08;display:flex;align-items:center;
+      justify-content:center;margin-top:72px}
+.icon svg{width:50px;height:50px}
+
+/* 主标题 截图 y584-627，20px #333 */
+.title{margin-top:24px;font-size:20px;font-weight:500;color:#333;line-height:1.1}
+
+/* 说明 截图 y658-693，14px #999 */
+.desc{margin-top:16px;font-size:14px;color:#999;line-height:1.25}
+
+/* ===== 新增元素：下载合同按钮（原图无） ===== */
+.dl{margin-top:32px;width:275px;height:44px;border:0;border-radius:4px;background:#1890ff;color:#fff;
+    font-size:16px;font-family:inherit;cursor:pointer;transition:background .15s}
+.dl:hover{background:#0d7ae0}
+
+.toast{position:fixed;left:50%;bottom:56px;transform:translate(-50%,12px);background:rgba(0,0,0,.78);
+       color:#fff;font-size:13px;padding:9px 18px;border-radius:4px;opacity:0;pointer-events:none;
+       transition:opacity .2s,transform .2s;z-index:9}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div class="phone">
+
+  <div class="sb">
+    <span>1:21</span>
+    <span class="r">
+      <span class="sig"><i></i><i></i><i></i><i></i></span>
+      <span class="wifi"></span>
+      <span class="bat"><i></i></span>
+    </span>
+  </div>
+
+  <div class="nav">签署完成</div>
+  <div class="gap"></div>
+
+  <div class="card">
+    <div class="icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 12.5 L9.5 18 L20 6.5" />
+      </svg>
+    </div>
+    <div class="title">签署成功</div>
+    <div class="desc">恭喜您，签约已完成</div>
+    <button class="dl" type="button" id="dl">下载合同</button>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+<script>
+  var t = document.getElementById('toast');
+  document.getElementById('dl').addEventListener('click', function () {
+    t.textContent = '开始下载合同';
+    t.classList.add('on');
+    clearTimeout(t._h);
+    t._h = setTimeout(function () { t.classList.remove('on'); }, 1800);
+  });
+</script>
+</body>
+</html>
