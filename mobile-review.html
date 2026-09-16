@@ -18,13 +18,6 @@
         <h2 class="result-title">签署完成</h2>
         <p class="result-desc">你已成功完成电子签署<br />合同文件已生成</p>
 
-        <div class="info-card">
-          <div class="info-row"><span>合同名称</span><b>资产划拨协议</b></div>
-          <div class="info-row"><span>签署方</span><b>张三个体工商户</b></div>
-          <div class="info-row"><span>签署时间</span><b>2026-09-16 14:30</b></div>
-          <div class="info-row"><span>合同文件</span><b class="zip-tag">2 份 · zip 打包</b></div>
-        </div>
-
         <button class="btn btn-primary" id="btn-download" type="button">下载合同</button>
         <button class="btn btn-default" id="btn-back" type="button">返回首页</button>
       </div>
@@ -46,17 +39,17 @@
         本需求<strong class="annot-key">不新增页面</strong>、<strong class="annot-key">无页面跳转</strong>，仅在原签署完成页新增一个按钮
       </div>
 
-      <div class="annot annot-dim annot-right" data-annot-id="m2" style="top:392px">
-        <span class="annot-label">多份合同</span>
-        多份文件由上游<strong>打包为 zip</strong> 返回地址，一次下载，<strong>前端不参与打包</strong>
-      </div>
-
-      <div class="annot annot-highlight annot-right" data-annot-id="m3" style="top:486px">
+      <div class="annot annot-highlight annot-left" data-annot-id="m2" style="top:286px">
         <span class="annot-label">主按钮 · 无条件展示</span>
         e签宝 有独立签署结果页，本页仅法大大通道场景，<strong>无需通道判断或按钮隐藏</strong>
       </div>
 
-      <div class="annot annot-right" data-annot-id="m4" style="top:596px">
+      <div class="annot annot-dim annot-right" data-annot-id="m3" style="top:286px">
+        <span class="annot-label">下载内容</span>
+        页面<strong>不展示合同文件信息</strong>；多份合同由上游<strong>打包为 zip</strong> 返回地址，一次下载，前端不参与打包
+      </div>
+
+      <div class="annot annot-right" data-annot-id="m4" style="top:386px">
         <span class="annot-label">交互与异常</span>
         点击后按钮进 <strong class="annot-key">loading</strong> 防重复提交；失败以 <strong class="annot-key">Toast</strong> 提示（文案待确认）
       </div>
