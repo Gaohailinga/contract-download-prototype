@@ -47,13 +47,6 @@ function bindDownload() {
 }
 
 function bindNav() {
-  const back = $('btn-back');
-  if (back) {
-    back.addEventListener('click', () => {
-      showScreen('screen-home');
-      showToast('已返回首页');
-    });
-  }
   const entry = $('home-contract');
   if (entry) {
     entry.addEventListener('click', () => showScreen('screen-result'));
