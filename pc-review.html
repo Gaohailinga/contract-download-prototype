@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>签署完成页 · PC 端（评审标注版）</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="stage">
+    <div class="browser">
+      <div class="browser-bar">
+        <span class="browser-dot dot-red"></span>
+        <span class="browser-dot dot-yellow"></span>
+        <span class="browser-dot dot-green"></span>
+        <div class="browser-url">https://xxx.tianque.com/sign/result</div>
+      </div>
+
+      <!-- 签署完成页 -->
+      <div class="browser-body screen pc-result" id="screen-result">
+        <div class="result-icon">✓</div>
+        <h2 class="result-title">签署完成</h2>
+        <p class="result-desc">你已成功完成电子签署，合同文件已生成</p>
+
+        <table class="pc-info">
+          <tr><td>合同名称</td><td>资产划拨协议</td></tr>
+          <tr><td>签署方</td><td>张三个体工商户</td></tr>
+          <tr><td>签署时间</td><td>2026-09-16 14:30</td></tr>
+          <tr><td>合同文件</td><td><span class="zip-tag">2 份 · zip 打包</span></td></tr>
+        </table>
+
+        <div class="pc-btns">
+          <button class="btn btn-primary" id="btn-download" type="button">下载合同</button>
+          <button class="btn btn-default" id="btn-back" type="button">返回首页</button>
+        </div>
+      </div>
+
+      <!-- 首页占位（用于形成闭环） -->
+      <div class="browser-body screen hidden" id="screen-home">
+        <h3 class="home-title">我的合同</h3>
+        <div class="home-item" id="home-contract">
+          <span>已签署合同</span><span class="tag">查看 ›</span>
+        </div>
+        <div class="home-item"><span>待签署合同</span><span class="tag">0 份</span></div>
+      </div>
+    </div>
+
+    <!-- ===== 评审标注层 ===== -->
+    <div class="annot-layer">
+      <div class="annot annot-right" data-annot-id="p1" style="top:52px">
+        <span class="annot-label">页面范围</span>
+        本需求<strong class="annot-key">不新增页面</strong>、<strong class="annot-key">无页面跳转</strong>，仅在原签署完成页新增一个按钮
+      </div>
+
+      <div class="annot annot-dim annot-right" data-annot-id="p2" style="top:300px">
+        <span class="annot-label">多份合同</span>
+        多份文件由上游<strong>打包为 zip</strong> 返回地址，一次下载，<strong>前端不参与打包</strong>
+      </div>
+
+      <div class="annot annot-highlight annot-left" data-annot-id="p3" style="top:300px">
+        <span class="annot-label">主按钮 · 无条件展示</span>
+        e签宝 有独立签署结果页，本页仅法大大通道场景，<strong>无需通道判断或按钮隐藏</strong>
+      </div>
+
+      <div class="annot annot-right" data-annot-id="p4" style="top:452px">
+        <span class="annot-label">交互与异常</span>
+        点击后按钮进 <strong class="annot-key">loading</strong> 防重复提交；失败以 <strong class="annot-key">Toast</strong> 提示（文案待确认）
+      </div>
+    </div>
+  </div>
+
+  <!-- 演示控制（仅评审版提供） -->
+  <div class="demo-panel">
+    <h4>演示控制 · 仅评审用</h4>
+    <label><input type="radio" name="resp" value="success" checked /> 上游返回下载地址</label>
+    <label><input type="radio" name="resp" value="fail" /> 上游未返回地址</label>
+    <label><input type="radio" name="resp" value="expired" /> 下载地址已过期</label>
+  </div>
+  <button class="reset-btn" id="reset-annot" type="button">重置标注位置</button>
+
+  <div class="toast" id="toast"></div>
+  <script src="js/app.js"></script>
+  <script src="js/annot-drag.js"></script>
+</body>
+</html>

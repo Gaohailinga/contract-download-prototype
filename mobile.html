@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>签署完成页 · 移动端（纯净版）</title>
+  <link rel="stylesheet" href="css/style-original.css" />
+</head>
+<body>
+  <div class="stage">
+    <div class="device">
+      <div class="status-bar"><span>9:41</span><span>5G ▮▮▮</span></div>
+      <div class="nav-bar">签署结果</div>
+
+      <!-- 签署完成页 -->
+      <div class="screen" id="screen-result">
+        <div class="result-icon">✓</div>
+        <h2 class="result-title">签署完成</h2>
+        <p class="result-desc">你已成功完成电子签署<br />合同文件已生成</p>
+
+        <div class="info-card">
+          <div class="info-row"><span>合同名称</span><b>资产划拨协议</b></div>
+          <div class="info-row"><span>签署方</span><b>张三个体工商户</b></div>
+          <div class="info-row"><span>签署时间</span><b>2026-09-16 14:30</b></div>
+          <div class="info-row"><span>合同文件</span><b class="zip-tag">2 份 · zip 打包</b></div>
+        </div>
+
+        <button class="btn btn-primary" id="btn-download" type="button">下载合同</button>
+        <button class="btn btn-default" id="btn-back" type="button">返回首页</button>
+      </div>
+
+      <!-- 首页占位（用于形成闭环） -->
+      <div class="screen hidden" id="screen-home">
+        <h3 class="home-title">我的合同</h3>
+        <div class="home-item" id="home-contract">
+          <span>已签署合同</span><span class="tag">查看 ›</span>
+        </div>
+        <div class="home-item"><span>待签署合同</span><span class="tag">0 份</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="js/app-original.js"></script>
+</body>
+</html>
