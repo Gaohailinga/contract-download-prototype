@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>签署完成 - 移动端（评审版）</title>
+<style>
+/* ===== 原图 1:1 还原，与纯净版一致（截图 806×1416@2x，尺寸取 1/2 → 403×708） ===== */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
+body{background:#e9eaec;display:flex;justify-content:center;align-items:flex-start;gap:44px;
+     padding:92px 24px 48px;min-height:100vh;
+     font-family:-apple-system,"PingFang SC","Helvetica Neue","Microsoft YaHei",sans-serif}
+.phone{width:403px;height:708px;background:#f5f5f5;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.18);
+      flex:0 0 auto;position:relative}
+
+/* 状态栏 截图 y0-43 */
+.sb{height:22px;display:flex;align-items:center;justify-content:space-between;padding:0 14px 0 18px;
+    font-size:11px;font-weight:600;color:#1a1a1a}
+.sb .r{display:flex;align-items:center;gap:4px}
+.sig{display:flex;align-items:flex-end;gap:1.5px}
+.sig i{display:block;width:2.5px;background:#1a1a1a;border-radius:.5px}
+.sig i:nth-child(1){height:4px}.sig i:nth-child(2){height:6px}
+.sig i:nth-child(3){height:8px}.sig i:nth-child(4){height:10px}
+.wifi{width:13px;height:10px;background:#1a1a1a;
+      clip-path:polygon(50% 100%,0 38%,12% 26%,50% 62%,88% 26%,100% 38%)}
+.bat{width:22px;height:11px;border:1px solid rgba(26,26,26,.4);border-radius:3px;padding:1.5px;position:relative}
+.bat::after{content:"";position:absolute;right:-3px;top:3px;width:1.5px;height:4px;background:rgba(26,26,26,.4);border-radius:0 1px 1px 0}
+.bat i{display:block;width:100%;height:100%;background:#1a1a1a;border-radius:1px}
+
+/* 导航栏 截图 y43-173，标题 #333 */
+.nav{height:65px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:500;color:#333}
+
+/* 间隙 截图 y173-204 */
+.gap{height:15px;background:#f6f8fb}
+
+/* 内容卡片 截图 y204-1400 */
+.card{background:#fff;height:598px;display:flex;flex-direction:column;align-items:center;text-align:center}
+
+/* 成功图标 截图 y349-537，直径 189→94.5，绿色 #0bbb08 */
+.icon{width:94px;height:94px;border-radius:50%;background:#0bbb08;display:flex;align-items:center;
+      justify-content:center;margin-top:72px}
+.icon svg{width:50px;height:50px}
+
+/* 主标题 截图 y584-627，20px #333 */
+.title{margin-top:24px;font-size:20px;font-weight:500;color:#333;line-height:1.1}
+
+/* 说明 截图 y658-693，14px #999 */
+.desc{margin-top:16px;font-size:14px;color:#999;line-height:1.25}
+
+/* ===== 新增元素：下载合同按钮（原图无） ===== */
+.dl{margin-top:32px;width:275px;height:44px;border:0;border-radius:4px;background:#1890ff;color:#fff;
+    font-size:16px;font-family:inherit;cursor:pointer;transition:background .15s}
+.dl:hover{background:#0d7ae0}
+
+.toast{position:fixed;left:50%;bottom:56px;transform:translate(-50%,12px);background:rgba(0,0,0,.78);
+       color:#fff;font-size:13px;padding:9px 18px;border-radius:4px;opacity:0;pointer-events:none;
+       transition:opacity .2s,transform .2s;z-index:9}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* 按钮禁用态 */
+.dl:disabled{opacity:.7;cursor:default}
+
+/* ===== 评审层：仅评审版存在，不参与开发交付 ===== */
+.ctl{position:fixed;left:50%;top:22px;transform:translateX(-50%);z-index:30;display:flex;
+     align-items:center;gap:12px;background:rgba(255,255,255,.97);border:1px solid #e2e8f0;
+     border-radius:999px;padding:8px 14px;box-shadow:0 8px 24px rgba(15,23,42,.14);
+     font-size:13px;color:#475569;white-space:nowrap}
+.ctl>em{font-style:normal;font-weight:600;color:#0f172a}
+.seg{display:flex;background:#f1f5f9;border-radius:999px;padding:3px}
+.seg button{border:0;background:none;font-family:inherit;font-size:13px;color:#64748b;
+            padding:6px 16px;border-radius:999px;cursor:pointer;transition:.15s}
+.seg button.on{background:#fff;color:#0f172a;font-weight:600;box-shadow:0 1px 4px rgba(15,23,42,.14)}
+.notes{width:300px;flex:0 0 auto;display:flex;flex-direction:column;gap:14px}
+.note{background:#fff;border-radius:8px;padding:14px 16px;box-shadow:0 4px 16px rgba(15,23,42,.08);
+      border-left:3px solid #cbd5e1;font-size:13px;color:#475569;line-height:1.75}
+.note h5{font-size:12px;font-weight:600;color:#334155;margin-bottom:5px}
+.note.key{border-left-color:#1890ff}
+.note.key h5{color:#1890ff}
+.note code{background:#eef2f7;border-radius:3px;padding:1px 5px;font-size:12px;color:#0f172a}
+</style>
+</head>
+<body>
+
+<!-- 评审控制条：切换下载成功页 / 下载失败页 -->
+<div class="ctl">
+  <em>下载结果</em>
+  <div class="seg" id="seg">
+    <button type="button" data-scene="ok" class="on">下载成功页</button>
+    <button type="button" data-scene="fail">下载失败页</button>
+  </div>
+</div>
+
+<div class="phone">
+
+  <div class="sb">
+    <span>1:21</span>
+    <span class="r">
+      <span class="sig"><i></i><i></i><i></i><i></i></span>
+      <span class="wifi"></span>
+      <span class="bat"><i></i></span>
+    </span>
+  </div>
+
+  <div class="nav">签署完成</div>
+  <div class="gap"></div>
+
+  <div class="card">
+    <div class="icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 12.5 L9.5 18 L20 6.5" />
+      </svg>
+    </div>
+    <div class="title">签署成功</div>
+    <div class="desc">恭喜您，签约已完成</div>
+    <button class="dl" type="button" id="dl">下载合同</button>
+  </div>
+
+</div>
+
+<!-- 评审标注 -->
+<div class="notes">
+  <div class="note key">
+    <h5>新增元素 · 下载合同按钮</h5>
+    位于状态说明下方，宽 275、高 44。除该按钮外，页面<strong>未改动任何原有元素</strong>。
+  </div>
+  <div class="note">
+    <h5>无页面跳转</h5>
+    本需求<strong>不新增页面</strong>，下载全程在当前页完成，无页面跳转。
+  </div>
+  <div class="note">
+    <h5>下载内容</h5>
+    页面<strong>不展示合同文件信息</strong>；多份合同由上游<strong>打包为 zip</strong> 返回地址，一次下载，前端不参与打包。
+  </div>
+  <div class="note">
+    <h5>交互与反馈</h5>
+    点击后按钮进 <code>loading</code> 防重复提交；成功为浏览器原生下载（无自建提示），失败以 <code>Toast</code> 提示。
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script>
+  var dl = document.getElementById('dl');
+  var t = document.getElementById('toast');
+  var scene = 'ok';
+
+  function toast(msg) {
+    t.textContent = msg;
+    t.classList.add('on');
+    clearTimeout(t._h);
+    t._h = setTimeout(function () { t.classList.remove('on'); }, 1800);
+  }
+
+  /* 评审控制：切换下载成功页 / 下载失败页 */
+  var segs = document.querySelectorAll('#seg button');
+  for (var i = 0; i < segs.length; i++) {
+    segs[i].addEventListener('click', function () {
+      for (var j = 0; j < segs.length; j++) { segs[j].classList.remove('on'); }
+      this.classList.add('on');
+      scene = this.getAttribute('data-scene');
+      if (scene === 'fail') { toast('下载失败，请稍后重试'); }
+      else { toast('下载成功：由浏览器原生下载，页面无自建提示'); }
+    });
+  }
+
+  /* 点击下载：按钮置灰 → 按当前场景给出反馈 */
+  dl.addEventListener('click', function () {
+    dl.disabled = true;
+    dl.textContent = '下载中…';
+    setTimeout(function () {
+      dl.disabled = false;
+      dl.textContent = '下载合同';
+      if (scene === 'fail') { toast('下载失败，请稍后重试'); }
+      else { toast('合同下载中，请留意浏览器提示'); }
+    }, 1000);
+  });
+</script>
+</body>
+</html>
