@@ -54,6 +54,19 @@ body{background:#e9eaec;display:flex;justify-content:center;padding:24px 0;min-h
        color:#fff;font-size:13px;padding:9px 18px;border-radius:4px;opacity:0;pointer-events:none;
        transition:opacity .2s,transform .2s;z-index:9}
 .toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* ===== 下载失败弹窗（沿用 iOS 系统弹窗样式） ===== */
+.mask{position:absolute;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;
+      justify-content:center;z-index:8}
+.mask.on{display:flex}
+.dlg{width:270px;background:#fff;border-radius:14px;overflow:hidden;text-align:center}
+.dlg h3{font-size:17px;font-weight:600;color:#333;padding:22px 20px 8px}
+.dlg p{font-size:14px;color:#666;line-height:1.5;padding:0 24px 20px}
+.dlg .acts{display:flex;border-top:1px solid #ebebeb}
+.dlg .acts button{flex:1;height:48px;border:0;background:none;font-size:17px;font-family:inherit;
+                  color:#666;cursor:pointer}
+.dlg .acts button+button{border-left:1px solid #ebebeb;color:#1890ff;font-weight:500}
+.dl:disabled{opacity:.7;cursor:default}
 </style>
 </head>
 <body>
@@ -82,16 +95,59 @@ body{background:#e9eaec;display:flex;justify-content:center;padding:24px 0;min-h
     <button class="dl" type="button" id="dl">下载合同</button>
   </div>
 
+  <!-- ===== 新增：下载失败弹窗 ===== -->
+  <div class="mask" id="mask">
+    <div class="dlg">
+      <h3>下载失败</h3>
+      <p>合同文件下载失败<br />请检查网络后重试</p>
+      <div class="acts">
+        <button type="button" id="cancel">取消</button>
+        <button type="button" id="retry">重试</button>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <div class="toast" id="toast"></div>
 <script>
+  var dl = document.getElementById('dl');
+  var mask = document.getElementById('mask');
   var t = document.getElementById('toast');
-  document.getElementById('dl').addEventListener('click', function () {
-    t.textContent = '开始下载合同';
+
+  function toast(msg) {
+    t.textContent = msg;
     t.classList.add('on');
     clearTimeout(t._h);
     t._h = setTimeout(function () { t.classList.remove('on'); }, 1800);
+  }
+
+  /* 点击下载：按钮置灰 → 演示失败分支 → 弹出失败弹窗 */
+  function startDownload() {
+    dl.disabled = true;
+    dl.textContent = '下载中…';
+    setTimeout(function () {
+      dl.disabled = false;
+      dl.textContent = '下载合同';
+      mask.classList.add('on');
+    }, 1200);
+  }
+
+  dl.addEventListener('click', startDownload);
+
+  document.getElementById('cancel').addEventListener('click', function () {
+    mask.classList.remove('on');
+  });
+
+  document.getElementById('retry').addEventListener('click', function () {
+    mask.classList.remove('on');
+    dl.disabled = true;
+    dl.textContent = '下载中…';
+    setTimeout(function () {
+      dl.disabled = false;
+      dl.textContent = '下载合同';
+      toast('合同下载中，请留意浏览器提示');
+    }, 1200);
   });
 </script>
 </body>
