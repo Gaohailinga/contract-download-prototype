@@ -51,7 +51,7 @@ body{background:#dfe3e8;display:flex;flex-direction:column;align-items:center;
     color:#fff;font-size:12px;font-family:inherit;cursor:pointer;transition:background .15s}
 .dl:hover{background:#0d7ae0;border-color:#0d7ae0}
 
-/* 页面正中提示：成功 / 失败反馈（演示用，置于页面中央） */
+/* 页面正中提示：下载结果反馈（成功 / 失败） */
 .tip{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.94);
      display:flex;flex-direction:column;align-items:center;gap:10px;min-width:130px;
      padding:22px 26px;border-radius:8px;background:rgba(0,0,0,.78);color:#fff;
@@ -119,7 +119,7 @@ body{background:#dfe3e8;display:flex;flex-direction:column;align-items:center;
     </div>
   </div>
 
-  <!-- 页面正中提示：仅评审版用于演示下载结果 -->
+  <!-- 下载结果提示：页面正中 -->
   <div class="tip" id="tip"><i id="tip-ico"></i><span id="tip-txt"></span></div>
 
 </div>
@@ -140,7 +140,7 @@ body{background:#dfe3e8;display:flex;flex-direction:column;align-items:center;
   </div>
   <div class="note">
     <h5>交互与反馈</h5>
-    点击后按钮进 <code>loading</code> 防重复提交；成功为浏览器原生下载，失败以提示承载。本评审版的成功／失败提示<strong>居中展示</strong>，仅用于演示。
+    点击后按钮进 <code>loading</code> 防重复提交；下载结果统一以<strong>页面居中提示</strong>反馈——成功提示「下载成功」，失败提示「下载失败，请稍后重试」，约 3 秒后自动消失。
   </div>
 </div>
 
