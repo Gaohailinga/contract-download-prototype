@@ -11,7 +11,7 @@ body{background:#dfe3e8;display:flex;flex-direction:column;align-items:center;
      padding:92px 24px 48px;min-height:100vh;
      font-family:-apple-system,"PingFang SC","Helvetica Neue","Microsoft YaHei",sans-serif}
 .page{width:1105px;height:638px;background:#f5f7fa;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.18);
-      flex:0 0 auto}
+      flex:0 0 auto;position:relative}
 
 /* 顶部栏 截图 y0-78，白底，底边 #e5e7eb */
 .topbar{height:39px;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;padding-left:21px}
@@ -51,11 +51,17 @@ body{background:#dfe3e8;display:flex;flex-direction:column;align-items:center;
     color:#fff;font-size:12px;font-family:inherit;cursor:pointer;transition:background .15s}
 .dl:hover{background:#0d7ae0;border-color:#0d7ae0}
 
-/* 轻提示 */
-.toast{position:fixed;left:50%;bottom:56px;transform:translate(-50%,12px);background:rgba(0,0,0,.78);
-       color:#fff;font-size:13px;padding:9px 18px;border-radius:4px;opacity:0;pointer-events:none;
-       transition:opacity .2s,transform .2s}
-.toast.on{opacity:1;transform:translate(-50%,0)}
+/* 页面正中提示：成功 / 失败反馈（演示用，置于页面中央） */
+.tip{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.94);
+     display:flex;flex-direction:column;align-items:center;gap:10px;min-width:130px;
+     padding:22px 26px;border-radius:8px;background:rgba(0,0,0,.78);color:#fff;
+     font-size:14px;line-height:1.4;text-align:center;opacity:0;pointer-events:none;
+     transition:opacity .22s,transform .22s;z-index:20}
+.tip.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.tip i{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+       font-style:normal;font-size:20px;font-weight:700;color:#fff}
+.tip.ok i{background:#53c31b}
+.tip.err i{background:#ff4d4f}
 
 /* 按钮禁用态 */
 .dl:disabled{opacity:.7;cursor:default}
@@ -113,6 +119,9 @@ body{background:#dfe3e8;display:flex;flex-direction:column;align-items:center;
     </div>
   </div>
 
+  <!-- 页面正中提示：仅评审版用于演示下载结果 -->
+  <div class="tip" id="tip"><i id="tip-ico"></i><span id="tip-txt"></span></div>
+
 </div>
 
 <!-- 评审标注 -->
@@ -131,21 +140,24 @@ body{background:#dfe3e8;display:flex;flex-direction:column;align-items:center;
   </div>
   <div class="note">
     <h5>交互与反馈</h5>
-    点击后按钮进 <code>loading</code> 防重复提交；成功为浏览器原生下载（无自建提示），失败以 <code>Toast</code> 提示。
+    点击后按钮进 <code>loading</code> 防重复提交；成功为浏览器原生下载，失败以提示承载。本评审版的成功／失败提示<strong>居中展示</strong>，仅用于演示。
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
 <script>
   var dl = document.getElementById('dl');
-  var t = document.getElementById('toast');
+  var tip = document.getElementById('tip');
+  var tipIco = document.getElementById('tip-ico');
+  var tipTxt = document.getElementById('tip-txt');
   var scene = 'ok';
 
-  function toast(msg) {
-    t.textContent = msg;
-    t.classList.add('on');
-    clearTimeout(t._h);
-    t._h = setTimeout(function () { t.classList.remove('on'); }, 1800);
+  /* 画面正中提示：type 取 ok（下载成功）/ err（下载失败） */
+  function showTip(type, msg) {
+    tipIco.textContent = type === 'ok' ? '✓' : '✕';
+    tipTxt.textContent = msg;
+    tip.className = 'tip on ' + type;
+    clearTimeout(tip._h);
+    tip._h = setTimeout(function () { tip.className = 'tip ' + type; }, 3000);
   }
 
   /* 评审控制：切换下载成功页 / 下载失败页 */
@@ -155,25 +167,25 @@ body{background:#dfe3e8;display:flex;flex-direction:column;align-items:center;
       for (var j = 0; j < segs.length; j++) { segs[j].classList.remove('on'); }
       this.classList.add('on');
       scene = this.getAttribute('data-scene');
-      if (scene === 'fail') { toast('下载失败，请稍后重试'); }
-      else { toast('下载成功：由浏览器原生下载，页面无自建提示'); }
+      if (scene === 'fail') { showTip('err', '下载失败，请稍后重试'); }
+      else { showTip('ok', '下载成功'); }
     });
   }
 
-  /* 点击下载：按钮置灰 → 按当前场景给出反馈 */
+  /* 点击下载：按钮 loading → 结束按当前场景给出居中反馈 */
   dl.addEventListener('click', function () {
     dl.disabled = true;
     dl.textContent = '下载中…';
     setTimeout(function () {
       dl.disabled = false;
       dl.textContent = '下载合同';
-      if (scene === 'fail') { toast('下载失败，请稍后重试'); }
-      else { toast('合同下载中，请留意浏览器提示'); }
+      if (scene === 'fail') { showTip('err', '下载失败，请稍后重试'); }
+      else { showTip('ok', '下载成功'); }
     }, 1000);
   });
 
   document.getElementById('know').addEventListener('click', function () {
-    toast('已关闭');
+    showTip('ok', '已关闭');
   });
 </script>
 </body>
