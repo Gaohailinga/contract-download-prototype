@@ -51,17 +51,13 @@ body{background:#dfe3e8;display:flex;flex-direction:column;align-items:center;
     color:#fff;font-size:12px;font-family:inherit;cursor:pointer;transition:background .15s}
 .dl:hover{background:#0d7ae0;border-color:#0d7ae0}
 
-/* 页面正中提示：下载结果反馈（成功 / 失败） */
+/* 页面正中提示：下载结果反馈（成功 / 失败，仅文案无图标） */
 .tip{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.94);
-     display:flex;flex-direction:column;align-items:center;gap:10px;min-width:130px;
-     padding:22px 26px;border-radius:8px;background:rgba(0,0,0,.78);color:#fff;
+     display:flex;align-items:center;justify-content:center;min-width:110px;
+     padding:13px 22px;border-radius:8px;background:rgba(0,0,0,.78);color:#fff;
      font-size:14px;line-height:1.4;text-align:center;opacity:0;pointer-events:none;
      transition:opacity .22s,transform .22s;z-index:20}
 .tip.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
-.tip i{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-       font-style:normal;font-size:20px;font-weight:700;color:#fff}
-.tip.ok i{background:#53c31b}
-.tip.err i{background:#ff4d4f}
 
 /* 按钮禁用态 */
 .dl:disabled{opacity:.7;cursor:default}
@@ -120,7 +116,7 @@ body{background:#dfe3e8;display:flex;flex-direction:column;align-items:center;
   </div>
 
   <!-- 下载结果提示：页面正中 -->
-  <div class="tip" id="tip"><i id="tip-ico"></i><span id="tip-txt"></span></div>
+  <div class="tip" id="tip"><span id="tip-txt"></span></div>
 
 </div>
 
@@ -147,13 +143,11 @@ body{background:#dfe3e8;display:flex;flex-direction:column;align-items:center;
 <script>
   var dl = document.getElementById('dl');
   var tip = document.getElementById('tip');
-  var tipIco = document.getElementById('tip-ico');
   var tipTxt = document.getElementById('tip-txt');
   var scene = 'ok';
 
-  /* 画面正中提示：type 取 ok（下载成功）/ err（下载失败） */
+  /* 画面正中提示：仅文案，type 取 ok（下载成功）/ err（下载失败） */
   function showTip(type, msg) {
-    tipIco.textContent = type === 'ok' ? '✓' : '✕';
     tipTxt.textContent = msg;
     tip.className = 'tip on ' + type;
     clearTimeout(tip._h);

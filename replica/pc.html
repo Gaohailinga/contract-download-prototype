@@ -50,15 +50,13 @@ body{background:#dfe3e8;display:flex;justify-content:center;padding:24px 0;min-h
     color:#fff;font-size:12px;font-family:inherit;cursor:pointer;transition:background .15s}
 .dl:hover{background:#0d7ae0;border-color:#0d7ae0}
 
-/* 下载结果提示：页面正中 */
+/* 下载结果提示：页面正中（仅文案无图标） */
 .tip{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.94);
-     display:flex;flex-direction:column;align-items:center;gap:10px;min-width:130px;
-     padding:22px 26px;border-radius:8px;background:rgba(0,0,0,.78);color:#fff;
+     display:flex;align-items:center;justify-content:center;min-width:110px;
+     padding:13px 22px;border-radius:8px;background:rgba(0,0,0,.78);color:#fff;
      font-size:14px;line-height:1.4;text-align:center;opacity:0;pointer-events:none;
      transition:opacity .22s,transform .22s;z-index:20}
 .tip.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
-.tip i{width:36px;height:36px;border-radius:50%;background:#53c31b;display:flex;align-items:center;
-       justify-content:center;font-style:normal;font-size:20px;font-weight:700;color:#fff}
 
 /* 按钮禁用态 */
 .dl:disabled{opacity:.7;cursor:default}
@@ -89,7 +87,7 @@ body{background:#dfe3e8;display:flex;justify-content:center;padding:24px 0;min-h
   </div>
 
   <!-- 下载结果提示：页面正中 -->
-  <div class="tip" id="tip"><i>✓</i><span id="tip-txt"></span></div>
+  <div class="tip" id="tip"><span id="tip-txt"></span></div>
 
 </div>
 
